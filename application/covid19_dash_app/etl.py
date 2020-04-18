@@ -75,17 +75,17 @@ def clean_cases(df_raw):
 
 def get_locality(lga_name19):
     """
-    Local Government Area(LGA) names have a structure of name & suffix. 
+    Get a locality used by Australia Post from Local Government Area (LGA)
+    name.
+
+    LGA names have a structure of name & suffix. 
     A suffix indicates the Local Government Area status. 
     In New South Wales these suffixes are: Cities (C) and Areas (A).
     e.g.
     Burwood (A)
     Parramatta (C)
 
-    The locality used in NSW Covid19 case data is uppercase
-    and without the suffix.
-
-    Return a LGA name to uppercase and the suffix removed.
+    Return a LGA name in uppercase and the suffix removed.
     """
     if type(lga_name19) != type(str):
         lga_name19 = str(lga_name19)
