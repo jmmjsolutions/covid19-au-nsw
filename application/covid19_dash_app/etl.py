@@ -65,30 +65,15 @@ def clean_data(df_raw, df_type):
 
 def clean_postcodes(df_raw):
     # Only interested in NSW post codes
-    return df_raw.loc[df_raw["state"] == "NSW"]
+    df = df_raw.loc[df_raw["state"] == "NSW"]
+    # Some postcodes have multiple areas but to simplify plotting
+    # we will just assume one location for a postcode.
+    return df.drop_duplicates(subset="postcode", keep="first")
 
 
 def clean_cases(df_raw):
-    df_raw["locality"] = df_raw["lga_name19"].apply(get_locality)
+    # Case postcode is a float, convert to int to allow matching with
+    # Auspost postcode dataset
+    df_raw["postcode"] = df_raw["postcode"].fillna(0)
+    df_raw["postcode"] = df_raw["postcode"].astype(int)
     return df_raw
-
-
-def get_locality(lga_name19):
-    """
-    Get a locality used by Australia Post from Local Government Area (LGA)
-    name.
-
-    LGA names have a structure of name & suffix. 
-    A suffix indicates the Local Government Area status. 
-    In New South Wales these suffixes are: Cities (C) and Areas (A).
-    e.g.
-    Burwood (A)
-    Parramatta (C)
-
-    Return a LGA name in uppercase and the suffix removed.
-    """
-    if type(lga_name19) != type(str):
-        lga_name19 = str(lga_name19)
-    locality = lga_name19.upper()
-    locality = re.sub(r" \([A,C]\)", "", locality)
-    return locality
