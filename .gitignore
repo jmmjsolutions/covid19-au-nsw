@@ -1,3 +1,8 @@
+# Local overrides etc
+.mapbox_token
+local_app_settings.cfg
+nsw-lga.geojson
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
