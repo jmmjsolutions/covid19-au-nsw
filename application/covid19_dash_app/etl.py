@@ -84,7 +84,6 @@ def get_lga_features():
     with open(lga_path) as f:
         geojson = json.load(f)
     features = geojson["features"]
-    json_normalize(features)
 
     return features
 
